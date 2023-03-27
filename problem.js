@@ -29,12 +29,10 @@
     //Reverse a String: Write a program that Reverses a string 
 
     function reverseString(str,length) {
-        if (length==0)
-        return str[0];
-
+        if (length<0)
+        return "";
         return str[length]+reverseString(str,length-1);
     }
-
-    let str ="bashar";
-    let leng =str.length;
-    console.log(reverseString(str,length));
+    let str ="basharr";
+    let leng =str.length-1;
+    console.log(reverseString(str,leng));
