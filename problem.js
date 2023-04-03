@@ -92,63 +92,63 @@ const reversedQueue = reverseQueue(queue);
 console.log(reversedQueue);
 ////
 // q2 -2
-// class Queue {
-//     constructor() {
-//       this.items = [];
-//     }
-//     push(element) {
-//       return this.items.push(element);
-//     }
-//     pop() {
-//       if (this.items.length > 0) {
-//         return this.items.shift();
-//       }
-//     }
-//     front() {
-//       return this.items[0];
-//     }
-//     size() {
-//       return this.items.length;
-//     }
-//   }
-//   function reverseFirstK(queue, k) {
-//     solve(queue, k);
-//     let s = queue.size() - k;
-//     while (s-- > 0) {
-//       let x = queue.front();
-//       queue.pop();
-//       queue.push(x);
-//     }
-//     return queue;
-//   }
+class Queue {
+    constructor() {
+      this.items = [];
+    }
+    push(element) {
+      return this.items.push(element);
+    }
+    pop() {
+      if (this.items.length > 0) {
+        return this.items.shift();
+      }
+    }
+    front() {
+      return this.items[0];
+    }
+    size() {
+      return this.items.length;
+    }
+  }
+  function reverseFirstK(queue, k) {
+    solve(queue, k);
+    let s = queue.size() - k;
+    while (s-- > 0) {
+      let x = queue.front();
+      queue.pop();
+      queue.push(x);
+    }
+    return queue;
+  }
    
-//   function solve(queue, k) {
-//     if (k == 0) return;
-//     let e = queue.front();
-//     queue.pop();
-//     solve(queue, k - 1);
-//     queue.push(e);
-//   }
-//   let queu = new Queue();
-//   queu.push(10);
-//   queu.push(20);
-//   queu.push(30);
-//   queu.push(40);
-//   queu.push(50);
-//   queu.push(60);
-//   queu.push(70);
-//   queu.push(80);
-//   queu.push(90);
-//   queu.push(100);
-//   let k = queu.size();
-//   q = reverseFirstK(queu, k);
-//     console.log(q);
+  function solve(queue, k) {
+    if (k == 0) return;
+    let e = queue.front();
+    queue.pop();
+    solve(queue, k - 1);
+    queue.push(e);
+  }
+  let queu = new Queue();
+  queu.push(10);
+  queu.push(20);
+  queu.push(30);
+  queu.push(40);
+  queu.push(50);
+  queu.push(60);
+  queu.push(70);
+  queu.push(80);
+  queu.push(90);
+  queu.push(100);
+  let k = queu.size();
+ let q1 = reverseFirstK(queu, k);
+    console.log(q1);
 /////////////////////////////////////////////////////////////////
 
 // q3
 //Implement a Queue using 2 stacks s1 and s2.
 
-class Queue {
+class Queuee {
     constructor() {
       this.s1 = [];
       this.s2 = []; 
@@ -175,7 +175,7 @@ class Queue {
     }
   }
 
-  const q = new Queue();
+  const q = new Queuee();
 
 q.enqueue(1);
 q.enqueue(2);
@@ -187,4 +187,157 @@ console.log(q.dequeue());
 console.log(q.dequeue()); 
 console.log(q.dequeue()); 
 console.log(q.dequeue()); 
- 
+ ///////////////////////////////////
+
+ // q1 linkedlist 
+ //Create a function that takes a LinkedList and deletes the middle node in it and returns it
+
+
+ class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+    this.prev = null;
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.size=0;
+  }
+  insertAtEnd(value) {
+    const node = new Node(value);
+    if (!this.head) {
+      this.head = node;
+      this.prev = null;
+    } else {
+      this.tail.next = node;
+      node.prev = this.tail;
+    }
+    this.tail = node;
+    this.size++;
+  }
+
+  insertAtBeginning(value) {
+    const node = new Node(value);
+    if (!this.head) {
+      this.head = node;
+      this.tail = node;
+      this.prev = null;
+    } else {
+      node.next = this.head;
+      this.head = node;
+      node.prev=null;
+    }
+    this.size++;
+    return value;
+  }
+
+  insertAfter(nodeValue, value) {
+    let currentNode = this.head;
+    while (currentNode) {
+      if (currentNode.value === nodeValue) {
+        const node = new Node(value);
+        node.next = currentNode.next;
+        currentNode.next = node;
+        if (currentNode === this.tail) {
+          this.tail = node;
+        }
+        
+      }
+      currentNode = currentNode.next;
+    }
+    this.size++;
+    return value;
+  }
+  delete() {
+
+    let s=0;
+    if (this.size%2=== 0) {
+    s=this.size/2;
+    }
+    else{
+      s=(this.size+1)/2;
+    }
+
+
+
+
+    let currentNode = this.head;
+    let value
+    if (currentNode === this.tail) {
+      this.tail =currentNode ;
+      value =this.tail.value;
+      return value;
+    }
+    while (currentNode) {
+      if (currentNode.value === s-1) {
+        value=currentNode.next.value;
+        currentNode.next=currentNode.next.next;
+        currentNode.next.prev=currentNode;
+this.size--;
+        return value;
+      }
+      currentNode=currentNode.next;
+    }
+  }
+
+  reverseli(){
+
+    let firstnodee = this.head;
+  let lastNode = this.tail;
+  let fnvalue = firstnodee.value;
+  let lnvalue = lastNode.value;
+  // let nextfn = firstnodee.next;
+  // let prevfn = lastNode.prev;
+  for(let i=0; i<this.size/2; i++) {
+    firstnodee.value=lnvalue;
+    lastNode.value=fnvalue;
+    firstnodee=firstnodee.next;
+    lastNode=lastNode.prev;
+    fnvalue=firstnodee.value;
+    lnvalue=lastNode.value;
+  }
+  }
+
+
+}
+
+const linkedList = new LinkedList();
+linkedList.insertAtEnd(1);
+linkedList.insertAtEnd(2);
+linkedList.insertAtEnd(3);
+linkedList.insertAtEnd(4);
+linkedList.insertAtEnd(5);
+linkedList.insertAtEnd(6);
+// console.log(linkedList);
+// console.log(linkedList.delete());
+// //console.log(linkedList.delete());
+// console.log(linkedList);
+
+///////////////////////////////////////
+//q2
+//Create a function that takes a LinkedList and reverses it
+// reverseli(){
+
+//   let firstnodee = this.head;
+// let lastNode = this.tail;
+// let fnvalue = firstnodee.value;
+// let lnvalue = lastNode.value;
+// // let nextfn = firstnodee.next;
+// // let prevfn = lastNode.prev;
+// for(let i=0; i<this.size/2; i++) {
+//   firstnodee.value=lnvalue;
+//   lastNode.value=fnvalue;
+//   firstnodee=firstnodee.next;
+//   lastNode=lastNode.prev;
+//   fnvalue=firstnodee.value;
+//   lnvalue=lastNode.value;
+// }
+// }
+
+
+linkedList.reverseli();
+console.log(linkedList);
