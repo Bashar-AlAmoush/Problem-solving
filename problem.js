@@ -194,10 +194,11 @@ console.log(q.dequeue());
 
 
  class Node {
-  constructor(value) {
+  constructor(value,loction) {
     this.value = value;
     this.next = null;
     this.prev = null;
+    this.loction = loction
   }
 }
 
@@ -211,10 +212,13 @@ class LinkedList {
     const node = new Node(value);
     if (!this.head) {
       this.head = node;
+      this.tail = node;
       this.prev = null;
+      node.loction = 1 
     } else {
       this.tail.next = node;
       node.prev = this.tail;
+      node.loction = this.tail.loction+1 
     }
     this.tail = node;
     this.size++;
@@ -226,10 +230,12 @@ class LinkedList {
       this.head = node;
       this.tail = node;
       this.prev = null;
+      node.loction = 1 
     } else {
       node.next = this.head;
       this.head = node;
       node.prev=null;
+      node.loction = this.tail.loction+1 
     }
     this.size++;
     return value;
@@ -238,12 +244,13 @@ class LinkedList {
   insertAfter(nodeValue, value) {
     let currentNode = this.head;
     while (currentNode) {
-      if (currentNode.value === nodeValue) {
+      if (currentNode.loction === nodeValue) {
         const node = new Node(value);
-        node.next = currentNode.next;
-        currentNode.next = node;
+        node.next = currentNode.next;//4.next=>3.next=5
+        currentNode.next = node;//3.next=>4.next=>5
         if (currentNode === this.tail) {
           this.tail = node;
+          
         }
         
       }
@@ -252,6 +259,8 @@ class LinkedList {
     this.size++;
     return value;
   }
+
+
   delete() {
 
     let s=0;
@@ -263,8 +272,6 @@ class LinkedList {
     }
 
 
-
-
     let currentNode = this.head;
     let value
     if (currentNode === this.tail) {
@@ -273,11 +280,11 @@ class LinkedList {
       return value;
     }
     while (currentNode) {
-      if (currentNode.value === s-1) {
-        value=currentNode.next.value;
-        currentNode.next=currentNode.next.next;
+      if (currentNode.loction === s-1) {
+        value=currentNode.next.value;//==3
+        currentNode.next=currentNode.next.next;//2=>4
         currentNode.next.prev=currentNode;
-this.size--;
+        this.size--;
         return value;
       }
       currentNode=currentNode.next;
@@ -295,10 +302,10 @@ this.size--;
   for(let i=0; i<this.size/2; i++) {
     firstnodee.value=lnvalue;
     lastNode.value=fnvalue;
-    firstnodee=firstnodee.next;
-    lastNode=lastNode.prev;
-    fnvalue=firstnodee.value;
-    lnvalue=lastNode.value;
+    firstnodee=firstnodee.next;//=>3
+    lastNode=lastNode.prev;//==2
+    fnvalue=firstnodee.value;//=>2
+    lnvalue=lastNode.value;//=>3
   }
   }
 
@@ -312,7 +319,7 @@ linkedList.insertAtEnd(3);
 linkedList.insertAtEnd(4);
 linkedList.insertAtEnd(5);
 linkedList.insertAtEnd(6);
-// console.log(linkedList);
+console.log(linkedList);
 // console.log(linkedList.delete());
 // //console.log(linkedList.delete());
 // console.log(linkedList);
@@ -339,5 +346,5 @@ linkedList.insertAtEnd(6);
 // }
 
 
-linkedList.reverseli();
-console.log(linkedList);
+// linkedList.reverseli();
+// console.log(linkedList);
